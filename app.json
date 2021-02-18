@@ -1,0 +1,92 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/forum/forum",
+    "pages/forum/writer/writer",
+    "pages/catalog/catalog",
+    "pages/newGoods/newGoods",
+    "pages/hotGoods/hotGoods",
+    "pages/ucenter/address/address",
+    "pages/ucenter/addressAdd/addressAdd",
+    "pages/ucenter/footprint/footprint",
+    "pages/ucenter/order/order",
+    "pages/ucenter/orderDetail/orderDetail",
+    "pages/ucenter/express/express",
+    "pages/ucenter/feedback/feedback",
+    "pages/ucenter/coupon/coupon",
+    "pages/ucenter/collect/collect",
+    "pages/auth/login/login",
+    "pages/auth/register/register",
+    "pages/auth/reset/reset",
+    "pages/pay/pay",
+    "pages/payResult/payResult",
+    "pages/ucenter/index/index",
+    "pages/topic/topic",
+    "pages/comment/comment",
+    "pages/commentPost/commentPost",
+    "pages/topicComment/topicComment",
+    "pages/brand/brand",
+    "pages/brandDetail/brandDetail",
+    "pages/search/search",
+    "pages/category/category",
+    "pages/cart/cart",
+    "pages/shopping/checkout/checkout",
+    "pages/shopping/address/address",
+    "pages/shopping/addressAdd/addressAdd",
+    "pages/goods/goods",
+    "pages/topicDetail/topicDetail",
+    "pages/writer/writer"
+    
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "桔子集市",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "backgroundColor": "#fafafa",
+    "borderStyle": "white",
+    "selectedColor": "#3CB371",
+    "color": "#666",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/images/ali_icons/home.png",
+        "selectedIconPath": "static/images/ali_icons/home.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/forum/forum",
+        "iconPath": "static/images/ali_icons/message.png",
+        "selectedIconPath": "static/images/ali_icons/message.png",
+        "text": "桔子论坛"
+      },
+      {
+        "pagePath": "pages/catalog/catalog",
+        "iconPath": "static/images/ali_icons/kind.png",
+        "selectedIconPath": "static/images/ali_icons/kind.png",
+        "text": "分类"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "iconPath": "static/images/ali_icons/shopping.png",
+        "selectedIconPath": "static/images/ali_icons/shopping.png",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/ucenter/index/index",
+        "iconPath": "static/images/ali_icons/mine.png",
+        "selectedIconPath": "static/images/ali_icons/mine.png",
+        "text": "我的桔瓣"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true,
+  "sitemapLocation": "sitemap.json"
+}

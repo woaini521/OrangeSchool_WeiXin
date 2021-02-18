@@ -1,0 +1,101 @@
+
+<view class="container">
+  <view class="profile-info">
+    <image wx:if="{{userInfo.avatarUrl}}" class="avatar" src="{{userInfo.avatarUrl}}"></image>
+    <image wx:if="{{!userInfo.avatarUrl}}" class="avatar" src="http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png"></image>
+    <view class="info">
+      <button
+    wx:if="{{canIUse&&!userInfo.nickName}}"
+    open-type="getUserInfo"
+    bindgetuserinfo="onWechatLogin" id="au_userinfo_button" type="primary" style="visibility:{{ifScope_Userinfo}};z-index:999;">授权登录</button>
+      <text wx:if="{{userInfo.nickName}}" class='name' bindtap=''>{{userInfo.nickName}}</text>
+      <!-- <text class='level' bindtap='onUserInfoClick'></text> -->
+    </view>
+    <image id="button_login" bindtap="onUserInfoClick" class='btn' src='/static/images/address_right.png'></image>
+  </view>
+
+  <view class="user-menu">
+    <view class="item">
+      <navigator url="/pages/ucenter/order/order" class="a">
+        <!-- <text class=""></text> -->
+        <image src='../../../static/images/ali_icons/order.png' alt='' style='height:2rem;width:2rem;'></image>
+        <!-- <rich-text nodes=""></rich-text> -->
+        <text class="txt">我的订单</text>
+      </navigator>
+    </view>
+    <view class="item">
+      <navigator url="/pages/ucenter/coupon/coupon" class="a">
+        <!-- <text class="icon coupon"></text> -->
+        <image src='../../../static/images/ali_icons/cutoff.png' alt='' style='height:2rem;width:2rem;'></image>
+        <text class="txt">优惠券</text>
+      </navigator>
+    </view>
+    <!-- <view class="item no-border">
+      <navigator url="url" class="a"> -->
+        <!-- <text class="icon gift"></text> -->
+        <!-- <image src='../../../static/images/ali_icons/礼物.png' alt='' style='height:2rem;width:2rem;'></image>
+        <text class="txt">礼品卡</text>
+      </navigator>
+    </view> -->
+    <view class="item">
+      <navigator url="/pages/ucenter/collect/collect" class="a">
+        <!-- <text class="icon address"></text> -->
+        <image src='../../../static/images/ali_icons/star.png' alt='' style='height:2rem;width:2rem;'></image>
+        <text class="txt">我的收藏</text>
+      </navigator>
+    </view>
+    <view class="item">
+      <navigator url="/pages/ucenter/footprint/footprint" class="a">
+        <!-- <text class="icon security"></text> -->
+        <image src='../../../static/images/ali_icons/look.png' alt='' style='height:2rem;width:2rem;'></image>
+        <text class="txt">我的足迹</text>
+      </navigator>
+    </view>
+    <view class="item">
+      <navigator url="url" class="a">
+        <!-- <text class="icon kefu"></text> -->
+        <image src='../../../static/images/ali_icons/gift.png' alt='' style='height:2rem;width:2rem;'></image>
+        <text class="txt">会员福利</text>
+      </navigator>
+    </view>
+    <view class="item">
+      <navigator url="../address/address" class="a">
+        <!-- <text class="icon address"></text> -->
+        <image src='../../../static/images/ali_icons/address.png' alt='' style='height:2rem;width:2rem;'></image>
+        <text class="txt">地址管理</text>
+      </navigator>
+    </view>
+    <view class="item">
+      <navigator url="url" class="a">
+        <!-- <text class="icon kefu"></text> -->
+        <image src='../../../static/images/ali_icons/call.png' alt='' style='height:2rem;width:2rem;'></image>
+        <text class="txt">联系客服</text>
+      </navigator>
+    </view>
+    <view class="item item-bottom">
+      <navigator url="url" class="a">
+        <!-- <text class="icon help"></text> -->
+        <image src='../../../static/images/ali_icons/info.png' alt='' style='height:2rem;width:2rem;'></image>
+        <text class="txt">帮助中心</text>
+      </navigator>
+    </view>
+    <view class="item item-bottom">
+      <navigator url="/pages/ucenter/feedback/feedback" class="a">
+        <!-- <text class="icon feedback"></text> -->
+        <image src='../../../static/images/ali_icons/edit.png' alt='' style='height:2rem;width:2rem;'></image>
+        <text class="txt">意见反馈</text>
+      </navigator>
+    </view>
+  </view>
+
+  <!-- <view class="logout" bindtap="exitLogin">退出登录</view> -->
+</view>
+
+<view class='dialog-login' wx:if="{{showLoginDialog}}" bindtap='onCloseLoginDialog'>
+  <view class='dialog-body' catchtap='onDialogBody'>
+    <view class='title'>请选择登录方式</view>
+    <view class='content'>
+      <button type="primary" open-type="getUserInfo" bindgetuserinfo="onWechatLogin">微信登录</button>
+    </view>
+  </view>
+</view>
