@@ -4,8 +4,8 @@ const api = require('./config/api.js');
 //app.js
 App({
   globalData:{
-      appid:'wx85913d7b3379a001',//appid需自己提供，此处的appid我随机编写
-      secret:'',//secret需自己提供，此处的secret我随机编写
+      appid:'',//appid需自己提供
+      secret:'',//secret需自己提供
       user_id:0,
       userInfo: {
       },
