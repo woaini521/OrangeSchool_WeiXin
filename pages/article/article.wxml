@@ -11,7 +11,7 @@
 				<view class="jiangqie-page-cmt-info">
 					<image src="../../images/ctm2.png" mode="widthFix" class="jiangqie-page-icon"></image>{{post.article_view}}
 				</view>
-				<text>{{post.article_post_time}}</text>
+				<text>{{post.string_date}}</text>
 				<!-- <text wx:for="{{post.cats}}" wx:for-index="cati" wx:key="cati" wx:for-item="cat" class="category">{{cat.name}}</text> -->
 			</view>
 		</view>
@@ -43,10 +43,10 @@
 					<image src="../../images/share.png" mode="widthFix"></image>
 					<text>分享好友</text>
 				</button> -->
-				<button class="jiangqie-page-laud-btn" catchtap="sharePosterClick">
+				<!-- <button class="jiangqie-page-laud-btn" catchtap="sharePosterClick">
 					<image src="../../images/share.png" mode="widthFix"></image>
 					<text>海报分享</text>
-				</button>
+				</button> -->
 			</view>
 			<view class="jiangqie-page-laud-list">
 				<view class="jiangqie-page-laud-list-title">- {{post.num_like}}人已赞 -</view>
@@ -61,21 +61,21 @@
 			评论<text>{{comment_count + comment_count_change}}</text>
 		</view>
 		<block wx:if="{{comments.length>0}}">
-			<view wx:for="{{comments}}" wx:key="id" class="jiangqie-page-cmt-content">
+			<view wx:for="{{comments}}" wx:key="article_id" class="jiangqie-page-cmt-content">
 				<view class="jiangqie-page-cmt-avatar">
-					<image src="{{item.user.avatar.length>0?item.user.avatar:'../../images/default_avatar.jpg'}}" mode="aspectFill"></image>
+					<image src="{{item.avatar?item.avatar:'../../images/default_avatar.jpg'}}" mode="aspectFill"></image>
 				</view>
 				<view class="jiangqie-page-cmt-head">
-					{{item.user.name}}
-					<text class="jiangqie-page-cmt-time">{{item.time}}</text>
-					<text wx:if="{{item.approved!=1}}" class="jiangqie-page-cmt-time">待审核</text>
-					<text class="comment-action" data-id="{{item.id}}" catchtap="handlerCommentReplyClick">回复</text>
-					<text wx:if="{{item.user.is_me==1}}" class="comment-action" data-id="{{item.id}}" catchtap="handlerCommentDeleteClick">删除</text>
+					{{item.nickname}}
+					<text class="jiangqie-page-cmt-time">{{item.string_date}}</text>
+					<!-- <text wx:if="{{item.approved!=1}}" class="jiangqie-page-cmt-time">待审核</text> -->
+					<!-- <text class="comment-action" data-id="{{item.id}}" catchtap="handlerCommentReplyClick">回复</text> -->
+					<text wx:if="{{item.user_id==user_id}}" class="comment-action" data-id="{{item.id}}" catchtap="handlerCommentDeleteClick">删除</text>
 				</view>
 				<view class="jiangqie-page-cmt-text">
-					<text class="jiangqie-page-cmt-text-world">{{item.content}}</text>
+					<text class="jiangqie-page-cmt-text-world">{{item.comment_content}}</text>
 					<view class="jiangqie-page-cmt-replay">
-						<view wx:for="{{item.replys}}" wx:key="id" wx:for-item="reply" class="jiangqie-page-cmt-replay-box">
+						<!-- <view wx:for="{{item.replys}}" wx:key="id" wx:for-item="reply" class="jiangqie-page-cmt-replay-box">
 							<view class="jiangqie-page-cmt-replay-nametime">
 								{{reply.user.name}}
 								<text class="jiangqie-page-cmt-replay-time">{{reply.time}}</text>
@@ -83,7 +83,7 @@
 								<text wx:if="{{reply.user.is_me==1}}" class="comment-action" data-id="{{reply.id}}" catchtap="handlerCommentDeleteClick">删除</text>
 							</view>
 							<view class="jiangqie-page-cmt-replay-world">{{reply.content}}</view>
-						</view>
+						</view> -->
 					</view>
 				</view>
 			</view>

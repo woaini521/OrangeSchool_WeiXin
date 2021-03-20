@@ -1,10 +1,20 @@
-const ApiRootUrl = 'https://sparrowoo.top:8080/api/';
+const ApiRootUrl = 'https://wjlpt.com/nideshop_apiapi/';
 
 module.exports = {
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口
   CatalogList: ApiRootUrl + 'catalog/index',  //分类目录全部分类数据接口
   CatalogCurrent: ApiRootUrl + 'catalog/current',  //分类目录当前分类数据接口
-
+  ArticlePost: ApiRootUrl + 'article/PostArticle',
+  ArticleList: ApiRootUrl + 'article/ArticleList',
+  ArticleDelete: ApiRootUrl + 'article/ArticleDelete',
+  ArticleInfo: ApiRootUrl + 'article/ArticleInfo',
+  ArticleLike: ApiRootUrl + 'article/ArticleLike',
+  ArticleCommentList: ApiRootUrl + 'article_comment/CommentList',
+  ArticleCommentDelete: ApiRootUrl + 'article_comment/CommentDelete',
+  ArticleCommentPost: ApiRootUrl + 'article_comment/CommentPost',
+  ArticleSearch: ApiRootUrl + 'article/ArticleSearch',
+  ArticlePic: ApiRootUrl + 'article/ArticlePic',
+  ArticleAdvert: ApiRootUrl + 'article_advert/index',
   AuthLoginByWeixin: ApiRootUrl + 'auth/loginByWeixin', //微信登录
 
   GoodsCount: ApiRootUrl + 'goods/count',  //统计商品总数
@@ -13,8 +23,11 @@ module.exports = {
   GoodsDetail: ApiRootUrl + 'goods/detail',  //获得商品的详情
   GoodsNew: ApiRootUrl + 'goods/new',  //新品
   GoodsHot: ApiRootUrl + 'goods/hot',  //热门
+  GoodsDestory:ApiRootUrl+'goods/destorymy',//删除自己的商品
   GoodsRelated: ApiRootUrl + 'goods/related',  //商品详情页的关联商品（大家都在看）
-
+  GoodsMine: ApiRootUrl + 'goods/my_goods',  //我的商品
+  GoodsStore: ApiRootUrl + 'goods/store',//二手上架
+  GoodsPicStore: ApiRootUrl + 'goods/goodPic',
   BrandList: ApiRootUrl + 'brand/list',  //品牌列表
   BrandDetail: ApiRootUrl + 'brand/detail',  //品牌详情
 

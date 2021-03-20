@@ -1,35 +1,43 @@
 
 
 const Constants = require('../../utils/constants');
-const Api = require('../../utils/api.js');
+const api = require('../../config/api.js');
 const Rest = require('../../utils/rest');
+var util = require('../../utils/util.js');
 const app = getApp();
 Page({
     data: {
         logo: '',
-        page:0,
+        page:1,
         offset:20,
         background: '',
         //顶部导航
-        topNav: [{
-            id: 0,
+        topNav: [
+            {
+            index: 0,
+            name: '首页'
+            },{
+            index: 1,
             name: '侃侃而谈'
         },{
-            id: 1,
+            index: 2,
             name: '怼天怼地'
         },{
-            id: 2,
+            index: 3,
             name: '互助时空'
         },{
-            id: 3,
+            index: 4,
+            name: '匿名提问'
+        },{
+            index: 5,
             name: '我的动态'
-        },],
+        }],
         currentTab: 0, //预设当前项的值
         index_articles:[],
         other_articles:[],
         //幻灯片
         slide: [],
-
+        banner:[],
         //图片导航
         iconNav: [],
 
@@ -52,59 +60,32 @@ Page({
 
     onLoad: function (options) {
         let that = this;
-
-        //获取配置
-        // Rest.get(Api.JIANGQIE_SETTING_HOME).then(res => {
-        //     let logo = '../../images/logo.png';
-        //     if (res.data.logo && res.data.logo.length > 0) {
-        //         logo = res.data.logo;
-        //     }
-        //     that.setData({
-        //         logo: logo,
-        //         // topNav: that.data.topNav.concat(res.data.top_nav),
-        //         slide: res.data.slide,
-        //         iconNav: res.data.icon_nav,
-        //         actives: res.data.actives,
-        //         hot: res.data.hot,
-        //         listMode: res.data.list_mode,
-        //         background: (res.data.slide && res.data.slide.length>0)?Api.JIANGQIE_BG_INDEX:'',
-        //     });
-
-        //     if (res.data.title && res.data.title.length > 0) {
-        //         getApp().appName = res.data.title;
-        //     }
-        // })
+        util.request(api.ArticleAdvert).then(res => {
+            this.setData({
+                banner: res.data.data
+            });
+          });
         console.log(getApp().globalData);
         //加载文章
-        this.loadPostLast(true);
+        // this.loadPostLast(true);
         this.load_article_Post(true);
-        
-        wx.request({
-            url: 'https://sparrowoo.top:8234/user/Login', //登录
-            method:'POST',
-            data: {
-              "open_id":getApp().globalData.user.openid,
-              "username":getApp().globalData.userInfo.nickName
-            },
-            header: {
-                'content-type': "application/x-www-form-urlencoded"
-            },
-            success (res) {
-            //   console.log(res);
-              getApp().globalData.tribune_cookie = res["cookies"][0].split(" ")[0]+res["cookies"][1].split(" ")[0];
-            //   console.log(getApp().globalData.tribune_cookie);
-            }
-          })
     },
       //下拉刷新
   onPullDownRefresh:function()
   {
     let that = this;
     that.setData({
-        page:0,
-        index_articles:"",
+        page:1,
+        index_articles:[],
+        other_articles:[],
+        banner:[]
     })
     wx.showNavigationBarLoading() //在标题栏中显示加载
+    util.request(api.ArticleAdvert).then(res => {
+        this.setData({
+            banner: res.data.data
+        });
+      });
     this.load_article_Post();
     //模拟加载
     setTimeout(function()
@@ -116,18 +97,21 @@ Page({
   },
     onReachBottom: function () {
         if (this.data.currentTab == 0) {
-            console.log(this.data.pullUpOnLast);
+            // console.log(this.data.pullUpOnLast);
             if (!this.data.pullUpOnLast) {
                 return;
+            }else{
+                this.load_article_Post(false);
             }
             
             // this.loadPostLast(false);
-            this.load_article_Post(false);
+            
         } else {
             if (!this.data.pullUpOn) {
                 return;
+            }else{
+                this.load_article_Post(false);
             }
-            this.load_article_Post(false);
             // this.loadPost(false);
         }
     },
@@ -148,7 +132,7 @@ Page({
     //nav start----
     handlerSearchClick: function (e) {
         wx.navigateTo({
-            url: '/pages/search/search'
+            url: './search/search'
         })
     },
     //nav end ----
@@ -164,22 +148,22 @@ Page({
     //tab -- start
     swichNav: function (e) {
         this.setData({
-            page:0,
+            page:1,
             other_articles:"",
         });
-        console.log(this.data.other_articles);
+        // console.log(e);
         let cur = e.currentTarget.dataset.current;
         if (this.data.currentTab == cur) {
             return false;
         }
 
         this.setData({
-            background: (cur==0 && this.data.slide && this.data.slide.length>0)?Api.JIANGQIE_BG_INDEX:'',
+            background: "",
             currentTab: cur
         })
 
-        if (cur !== 0) {
-            this.loadPost(true);
+        if (cur >= 0) {
+            // this.loadPost(true);
             this.load_article_Post(true);
         }
     },
@@ -202,60 +186,40 @@ Page({
     },
 
     handlerArticleClick: function (e) {
-        console.log(e);
+        // console.log(e);
         let post_id = e.currentTarget.dataset.id;
-        wx.navigateTo({
+        wx.navigateTo ({
             url: '/pages/article/article?post_id=' + post_id
         })
     },
 
     //加载数据
-    loadPostLast: function (refresh) {
-        let that = this;
+    // loadPostLast: function (refresh) {
+    //     let that = this;
 
-        that.setData({
-            loaddingLast: true
-        });
+    //     that.setData({
+    //         loaddingLast: true
+    //     });
 
-        let offset = 0;
-        if (!refresh) {
-            offset = that.data.postsLast.length;
-        }
+    //     let offset = 0;
+    //     if (!refresh) {
+    //         offset = that.data.postsLast.length;
+    //     }
+    // },
 
-        Rest.get(Api.JIANGQIE_POSTS_LAST, {
-            'offset': offset
-        }).then(res => {
-            that.setData({
-                loaddingLast: false,
-                postsLast: refresh ? res.data : that.data.postsLast.concat(res.data),
-                pullUpOnLast: res.data.length >= Constants.JQ_PER_PAGE_COUNT
-            });
-        })
-    },
+    // loadPost: function (refresh) {
+    //     let that = this;
 
-    loadPost: function (refresh) {
-        let that = this;
+    //     that.setData({
+    //         loadding: true
+    //     });
 
-        that.setData({
-            loadding: true
-        });
+    //     let offset = 0;
+    //     if (!refresh) {
+    //         offset = that.data.posts.length;
+    //     }
 
-        let offset = 0;
-        if (!refresh) {
-            offset = that.data.posts.length;
-        }
-
-        Rest.get(Api.JIANGQIE_POSTS_CATEGORY, {
-            'offset': offset,
-            'cat_id': that.data.topNav[that.data.currentTab].id
-        }).then(res => {
-            that.setData({
-                loadding: false,
-                posts: refresh ? res.data : that.data.posts.concat(res.data),
-                pullUpOn: res.data.length >= Constants.JQ_PER_PAGE_COUNT
-            });
-        })
-    },
+    // },
 
     openLink: function(link) {
         if(link.startsWith('/pages')) {
@@ -286,53 +250,100 @@ Page({
         }
         return true;
     },
-    load_article_Post: function (refresh) {
-        this.setData({
-            page:this.data.page+1,
-        })
-        var that = this;
-        wx.request({
-            url:"https://sparrowoo.top:8234/Articles/Info",
-            method:'GET',
-            data:{
-                page:this.data.page,
-                offset:20,
-                article_type:this.data.currentTab
-            },
-            header: {
-                'content-type': "application/json"
-            },
-            success (res) {
-                console.log(res);
-                var if_empty = that.isEmptyObject(res.data.results);
-                if(if_empty){
-                    if(that.data.currentTab==0){
-                        that.setData({
-                            pullUpOnLast:false,
-                        });
+    handlerDeleteArticle:function(e){
+        let that = this;
+    //   console.log(e.currentTarget.dataset.article_id);
+      let article_target = e.currentTarget.dataset.article_id;
+      wx.showModal({
+        title: '提示',
+        content: '确定要删除吗？',
+        success(res) {
+            if (res.confirm) {
+                util.request(api.ArticleDelete,{
+                    article_id:article_target,
+                },'POST').then(function(res){
+                    if(res.errno==0){
+                        wx.showToast({
+                            title: '删除成功！', // 标题
+                            icon: 'success',  // 图标类型，默认success
+                            duration: 1500  // 提示窗停留时间，默认1500ms
+                          }).then(function(res){
+                            that.setData({
+                                page:1,
+                                index_articles:[],
+                                other_articles:[],
+                            })
+                            wx.showNavigationBarLoading() //在标题栏中显示加载
+                            this.load_article_Post(true);
+                            //模拟加载
+                            setTimeout(function()
+                            {
+                              // complete
+                              wx.hideNavigationBarLoading() //完成停止加载
+                              wx.stopPullDownRefresh() //停止下拉刷新
+                            },1500);
+                          })
                     }else{
-                        that.setData({
-                            pullUpOn:false
-                        });
-                    }
-                    console.log(that.data.pullUpOnLast);
-                }else{
-                    if(that.data.currentTab==0){
-                        var temp_index_articles = Object.assign(that.data.index_articles,res.data.results);
-                        that.setData({
-                            index_articles:temp_index_articles,
-                        });
-                        console.log(that.data.index_articles);
-                    }else{
-                        var temp_index_articles = Object.assign(that.data.other_articles,res.data.results);
-                        that.setData({
-                            other_articles:temp_index_articles,
-                        });
-                        console.log(that.data.other_articles);
-                    }
-                    
-                }
+                        wx.showToast({
+                            title: '删除失败！', // 标题
+                            duration: 1500  // 提示窗停留时间，默认1500ms
+                          })
+                      }
+                });
             }
-        })
+        }
+    });
+      
+    },
+    load_article_Post: function (refresh) {
+        var that = this;
+        if(refresh){
+            this.setData({
+                page:1,
+            })
+        }
+        util.request(api.ArticleList,{
+            page:this.data.page,
+            offset:20,
+            article_type:this.data.currentTab,
+        }).then(function(res){
+                  console.log(res);
+                      if(res.errno==0){
+                        var if_empty = that.isEmptyObject(res.data);
+                        if(if_empty){
+                            if(that.data.currentTab==0){
+                                that.setData({
+                                    pullUpOnLast:false,
+                                    loaddingLast:false
+                                });
+                            }else{
+                                that.setData({
+                                    pullUpOn:false,
+                                    loadding:false
+                                });
+                            }
+                            // console.log(that.data.pullUpOnLast);
+                        }else{
+                            if(that.data.currentTab==0){
+                                var temp_index_articles = Object.assign(that.data.index_articles,res.data);
+                                that.setData({
+                                    index_articles:temp_index_articles,
+                                    loaddingLast:false,
+                                    page:that.data.page+1,
+                                });
+                                // console.log(that.data.page);
+                            }else{
+                                var temp_index_articles = Object.assign(that.data.other_articles,res.data);
+                                that.setData({
+                                    other_articles:temp_index_articles,
+                                    loadding:false,
+                                    page:that.data.page+1,
+                                });
+                                // console.log(that.data.page);
+                            }
+                            
+                        }
+                  }
+                })
     }
 })

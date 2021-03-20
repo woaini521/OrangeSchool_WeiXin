@@ -5,6 +5,7 @@
       <image class="icon"></image>
       <text class="txt">商品搜索, 共{{goodsCount}}款好物</text>
     </navigator>
+    <image class="kind-icon" src="../../static/images/ali_icons/kind_5.png" bindtap="goto_catalog"></image>
   </view>
   <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
     <swiper-item wx:for="{{banner}}" wx:key="{{item.id}}">

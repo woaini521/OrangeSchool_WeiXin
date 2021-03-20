@@ -151,7 +151,6 @@ page{
 .region-select .region-list{
   height: auto;
   overflow: scroll;
-
 }
 
 .region-select .region-list .item{

@@ -1,12 +1,4 @@
-/*
- * 酱茄小程序开源版 v1.3.0
- * Author: 酱茄
- * Help document: https://www.jiangqie.com/ky
- * github: https://github.com/longwenjunjie/jiangqie_kafei
- * gitee: https://gitee.com/longwenjunj/jiangqie_kafei
- * License：MIT
- * Copyright © 2020-2021 www.jiangqie.com All rights reserved.
- */
+
 
 @import "../../components/wxParse/wxParse.wxss";
 @import '../../templates/nodata/nodata.wxss';
@@ -253,11 +245,12 @@ button {
 
 .jiangqie-page-laud-btn {
     font-size: 16px;
-    float: left;
-    margin-left: 40rpx;
+    /* float: left; */
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 80rpx;
     padding: 10rpx 40rpx 14rpx;
-    width: 180rpx;
+    width: 250rpx;
     border: 1rpx solid #efefef;
 }
 
@@ -447,6 +440,10 @@ button {
     line-height: 96rpx;
     margin-right: 32rpx;
     float: right;
+    width: 80rpx;
+}
+.textareacontent .textheaders .publish::after {
+    border: none;
 }
 
 .textareaBox {

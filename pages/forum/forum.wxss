@@ -2,6 +2,15 @@
 #navBar{
     background-color:white;
 }
+.banner {
+    width: 100%;
+    height: 500rpx;
+  }
+  
+  .banner image {
+    width: 100%;
+    margin: 0 auto;
+  }
 .lxy-nav-bar__logo {
     display: flex;
     align-items: center;
@@ -241,7 +250,7 @@
     float: right;
     height: 160rpx;
     width: 240rpx;
-    margin-right: -260rpx;
+    /* margin-right: -260rpx; */
     border-radius: 20rpx;
     box-shadow: 5rpx 5rpx 20rpx rgba(0, 0, 0, 0.2);
 }
@@ -251,7 +260,7 @@
 }
 
 .jiangqie-news-title {
-    width: 100%;
+    width: 50%;
     font-size: 30rpx;
     color: #333;
     font-weight: 700;
@@ -268,6 +277,7 @@
 }
 
 .jiangqie-news-describe {
+    width: 50%;
     font-size: 26rpx;
     color: #999;
     line-height: 30rpx;
@@ -296,11 +306,13 @@
 }
 
 .jiangqie-news-tag {
+    font-size: 22rpx;
+    font-weight: 700;
     float: left;
     line-height: 32rpx;
     height: 30rpx;
     padding: 0 16rpx;
-    border: 1rpx solid #AAA;
+    border: 1rpx solid red;
     border-radius: 26rpx;
     margin-right: 12rpx;
 }
@@ -308,12 +320,14 @@
 .jiangqie-news-time {
     float: left;
     padding-top: 25rpx;
-    font-size: 18rpx;
+    font-size: 20rpx;
     line-height: 30rpx;
     height: 30rpx;
     vertical-align: middle;
     padding-right: 10rpx;
-    
+    /* background-color: #fdf6ec;
+    border-color: #faecd8; */
+    color: #e6a23c;
 }
 
 .image-wide {
@@ -324,7 +338,7 @@
     height: 320rpx;
     width: 690rpx;
     margin-right: 0rpx;
-    margin-bottom: 10rpx;
+    margin-bottom: 20rpx;
     clear: both;
     float: none;
 }
@@ -462,15 +476,15 @@
 /*tabbar end*/
 
 .jiangqie-news-title text {
-    font-size: 22rpx;
+    font-size: 25rpx;
     font-weight: 300;
     color: #FFF;
     background: #ab2b2b;
     /* float: left; */
-    width: 60rpx;
-    height: 36rpx;
+    width: 80rpx;
+    height: 50rpx;
     margin-top: 10rpx;
-    line-height: 36rpx;
+    line-height: 50rpx;
     text-align: center;
     border-radius: 8rpx;
     /* margin-right: 12rpx; */
@@ -502,9 +516,33 @@
       font-size: 25rpx;
       font-weight: 600;
       float: left;
+      background-color: #f4f4f5;
+      border-color: #e9e9eb;
+      color: #909399;
   }
   .headimg_userinfo{
     width: 420rpx;
     flex-wrap:wrap;
     flex-direction:column;
+  }
+  .jiangqie-news-delete{
+      /* width: 180rpx;
+      height: 50rpx;
+      font-size: 27rpx;
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+      color: white;
+      background-color: red; */
+      font-size: 25rpx;
+    font-weight: 300;
+    color: #FFF;
+    background: #c93c3c;
+    /* float: left; */
+    width: 200rpx;
+    height: 50rpx;
+    margin-top: 10rpx;
+    line-height: 50rpx;
+    text-align: center;
+    border-radius: 8rpx;
   }

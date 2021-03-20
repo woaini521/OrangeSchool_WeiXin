@@ -1,0 +1,57 @@
+<import src='../forum.wxss'/>
+<scroll-view class="container" style="height: 100%;">
+  <view class="search-header">
+    <view class="input-box">
+      <image class="icon" src="../../../static/images/ali_icons/search.png"></image>
+      <input name="input" class="keywrod" focus="true" value="{{keyword}}" confirm-type="search" bindinput="inputChange" bindfocus="inputFocus" bindconfirm="onKeywordConfirm" confirm-type="search" placeholder="输入关键词" />
+      <image class="del" wx:if="{{keyword}}" bindtap="clearKeyword" src="../../../static/images/ali_icons/cancel.png"></image>
+    </view>
+    <view class="right" bindtap="closeSearch">取消</view>
+  </view>
+  <view class="no-search" wx:if="{{ !searchStatus}}">
+  <!-- <view class="shelper-list" wx:if="{{keyword}}">
+    <view class="item" hover-class="navigator-hover" wx:for="{{helpKeyword}}" bindtap="onKeywordTap" data-keyword="{{item}}">{{item}}</view>
+  </view> -->
+  </view>
+
+<!--新闻列表——常规-->
+<view class="jiangqie-news-view">
+					<block wx:for="{{search_articles}}" wx:key="article_id">
+						<view class="jiangqie-news-block" data-id="{{item.article_id}}" catchtap="handlerArticleClick">
+							<view class="jiangqie-news-info">
+									<view class="jiangqie-news-cmt">
+										<text wx:if="{{item.article_type}}" class="jiangqie-news-tag">{{topNav[item.article_type].name}}</text>
+										<image src="../../../images/ctm2.png" mode="aspectFill" class=""></image>{{item.article_view}}
+									</view>
+									
+									<image wx:if="{{!userInfo.avatarUrl}}" class="avatar" src="{{item.head_img}}"></image>
+									<view class="headimg_userinfo">
+										<text class="jiangqie-news-name">{{item.username}}</text>
+										<text>\n</text>
+										<text class="jiangqie-news-time">{{item.string_date}}</text>
+										
+									</view>
+									
+								</view>
+							<!-- <image src="{{item.thumbnail}}" mode="aspectFill" class="jiangqie-news-image"></image> -->
+							<view class="jiangqie-news-text">
+								<image wx:if="{{item.thumbnail}}" src="{{item.thumbnail}}" mode="aspectFill" class="jiangqie-news-image"></image>
+								<view class="jiangqie-news-title {{item.excerpt?'':'jiangqie-news-no-excerpt'}}" style="">
+									
+									<!-- <text wx:if="{{item.stick==1}}">置顶</text> -->
+									{{item.article_header}}
+								</view>
+								<view wx:if="{{item.article_abstract}}" class="jiangqie-news-describe">{{item.article_abstract}}</view>
+								
+							</view>
+							
+							<!-- <image wx:if="{{item.stick==1}}" src="../../images/set_top.png" mode="aspectFill" class="jiangqie-news-stick-image"></image> -->
+						</view>
+					</block>
+				</view>
+
+  <view class="search-result-empty" wx:if="{{!search_articles.length && searchStatus}}">
+    <image class="icon" src="../../../static/images/ali_icons/no_search_result.png"></image>
+    <text class="text">没有找到该文章......</text>
+  </view>
+</scroll-view>

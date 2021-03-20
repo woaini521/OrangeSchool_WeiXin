@@ -35,11 +35,21 @@ Page({
       }
     })
   },
+  onPullDownRefresh: function () {
+    this.setData({
+      orderList:[],
+    });
+    this.onShow();
+},
   onReady:function(){
     // 页面渲染完成
   },
   onShow:function(){
     // 页面显示
+    this.setData({
+      orderList:[],
+    });
+    this.getOrderList();
   },
   onHide:function(){
     // 页面隐藏

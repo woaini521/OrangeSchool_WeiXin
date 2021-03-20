@@ -20,7 +20,7 @@ Component({
         //isDot为false时生效
         text: {
             type: String,
-            value: "© 酱茄 jiangqie.com"
+            value: "@桔子校园"
         }
     },
     data: {

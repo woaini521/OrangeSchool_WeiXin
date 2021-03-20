@@ -43,6 +43,26 @@ Page({
       });
     }, 1000);
   },
+  cancelOrder(){
+    let that = this;
+    util.request(api.OrderCancel, {
+      orderId: that.data.orderId
+    },'POST').then(function (res) {
+      if (res.errno === 0) {
+        console.log(res.data);
+        wx.showToast({
+          title:'取消成功',
+          icon:"success",
+          duration:1500
+        })
+        wx.navigateBack({
+          delta: 1
+        });
+        //that.payTimer();
+      }
+    });
+    
+  },
   payOrder() {
     let that = this;
     util.request(api.PayPrepayId, {

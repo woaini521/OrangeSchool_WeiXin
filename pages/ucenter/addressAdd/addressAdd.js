@@ -258,9 +258,10 @@ Page({
       }
     });
   },
+  
   cancelAddress(){
-    wx.navigateTo({
-      url: '/pages/ucenter/address/address',
+    wx.navigateBack({
+      delta: 1
     })
   },
   saveAddress(){
@@ -302,8 +303,8 @@ Page({
       is_default: address.is_default,
     }, 'POST').then(function (res) {
       if (res.errno === 0) {
-        wx.navigateTo({
-          url: '/pages/ucenter/address/address',
+        wx.navigateBack({
+          delta: 1
         })
       }
     });

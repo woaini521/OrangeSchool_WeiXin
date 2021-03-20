@@ -35,6 +35,35 @@ Page({
     this.getCategoryInfo();
 
   },
+  onPullDownRefresh:function(){
+    wx.showNavigationBarLoading() //在标题栏中显示加载
+    //模拟加载
+    setTimeout(function()
+    {
+      // complete
+      wx.hideNavigationBarLoading() //完成停止加载
+      wx.stopPullDownRefresh() //停止下拉刷新
+    },2000);
+    var that = this;
+    if (options.id) {
+      that.setData({
+        id: parseInt(options.id)
+      });
+    }
+
+
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          scrollHeight: res.windowHeight
+        });
+      }
+    });
+
+
+    this.getCategoryInfo();
+
+  },
   getCategoryInfo: function () {
     let that = this;
     util.request(api.GoodsCategory, { id: this.data.id })
@@ -73,7 +102,6 @@ Page({
   },
   onShow: function () {
     // 页面显示
-    console.log(1);
   },
   onHide: function () {
     // 页面隐藏

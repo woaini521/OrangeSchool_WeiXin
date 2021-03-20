@@ -12,15 +12,19 @@
 		<view wx:for="{{topNav}}" wx:key="index" class="tab-bar-item {{currentTab==index ? 'active' : ''}}" data-current="{{index}}" catchtap="swichNav">
 			<text class="tab-bar-title">{{item.name}}</text>
 		</view>
-		<view class="tab-bar-item">
-			<text class="tab-bar-title">.</text>
-		</view>
+
 	</scroll-view>
 	<!-- 用于进入分类菜单的按钮，可要可不要 -->
 	<!-- <view class="tab-more" catchtap="handlerTabMoreClick">
 		<image src="../../images/tabmorered.png" mode="aspectFill"></image>
 	</view> -->
-
+	<swiper wx:if="{{currentTab==0}}" class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
+    <swiper-item wx:for="{{banner}}" wx:key="{{item.id}}">
+      <navigator url="{{item.link}}" open-type="navigate">
+        <image src="{{item.image_url}}" mode="aspectFill" ></image>
+      </navigator>
+    </swiper-item>
+  </swiper>
 	<view class="tab-content" style="padding-top: 120rpx;">
 		<block wx:if="{{currentTab==0}}">
 
@@ -86,52 +90,34 @@
 				<!--新闻列表——常规-->
 				<view class="jiangqie-news-view">
 					<block wx:for="{{index_articles}}" wx:key="article_id">
-						<view wx:if="{{(listMode==1 && false) || (listMode==2) || (listMode==3 && index%5==4)}}" class="jiangqie-news-block image-wide" data-id="{{item.article_id}}" catchtap="handlerArticleClick">
-							<!-- <image src="{{item.thumbnail}}" mode="aspectFill" class="jiangqie-news-image"></image> -->
+
+						<view class="jiangqie-news-block" data-id="{{item.article_id}}" catchtap="handlerArticleClick">
 							<view class="jiangqie-news-info">
 									<view class="jiangqie-news-cmt">
+										<text wx:if="{{item.article_type}}" class="jiangqie-news-tag">{{topNav[item.article_type].name}}</text>
 										<image src="../../images/ctm2.png" mode="aspectFill" class=""></image>{{item.article_view}}
 									</view>
-									<!-- <text wx:for="{{item.tags}}" wx:key="id" class="jiangqie-news-tag">{{item.name}}</text> -->
-									<image wx:if="{{!userInfo.avatarUrl}}" class="avatar" src="{{item.head_img}}"></image>
-									<view class="headimg_userinfo">
-										<text class="jiangqie-news-name">{{item.username}}</text>
-										<text>\n</text>
-										<text class="jiangqie-news-time">{{item.article_post_time}}</text>
-									</view>
-								</view>
-							<view class="jiangqie-news-text">
-								<view class="jiangqie-news-title {{item.excerpt?'':'jiangqie-news-no-excerpt'}}">
-									<!-- <text wx:if="{{item.stick==1}}">置顶</text> -->
-									{{item.article_header}}
-								</view>
-								<!-- <view wx:if="{{item.excerpt}}" class="jiangqie-news-describe">{{item.excerpt}}</view> -->
-							</view>
-							<!-- <image wx:if="{{item.stick==1}}" src="../../images/set_top.png" mode="aspectFill" class="jiangqie-news-stick-image"></image> -->
-						</view>
-						<view wx:else class="jiangqie-news-block" data-id="{{item.article_id}}" catchtap="handlerArticleClick">
-							<view class="jiangqie-news-info">
-									<view class="jiangqie-news-cmt">
-										<image src="../../images/ctm2.png" mode="aspectFill" class=""></image>{{item.article_view}}
-									</view>
-									<!-- <text wx:for="{{item.tags}}" wx:key="id" class="jiangqie-news-tag">{{item.name}}</text> -->
-									<image wx:if="{{!userInfo.avatarUrl}}" class="avatar" src="{{item.head_img}}"></image>
-									<view class="headimg_userinfo">
-										<text class="jiangqie-news-name">{{item.username}}</text>
-										<text>\n</text>
-										<text class="jiangqie-news-time">{{item.article_post_time}}</text>
-									</view>
-								</view>
-							<!-- <image src="{{item.thumbnail}}" mode="aspectFill" class="jiangqie-news-image"></image> -->
-							<view class="jiangqie-news-text">
-								<view class="jiangqie-news-title {{item.excerpt?'':'jiangqie-news-no-excerpt'}}" style="">
 									
-									<!-- <text wx:if="{{item.stick==1}}">置顶</text> -->
+									<image wx:if="{{!userInfo.avatarUrl}}" class="avatar" src="{{item.head_img}}"></image>
+									<view class="headimg_userinfo">
+										<text class="jiangqie-news-name">{{item.username}}</text>
+										<text>\n</text>
+										<text class="jiangqie-news-time">{{item.string_date}}</text>
+										
+									</view>
+									
+								</view>
+							
+							<view class="jiangqie-news-text">
+								<image wx:if="{{item.thumbnail}}" src="{{item.thumbnail}}" mode="aspectFill" class="jiangqie-news-image"></image>
+								<view class="jiangqie-news-title {{item.excerpt?'':'jiangqie-news-no-excerpt'}}" style="">
+									<text wx:if="{{item.on_top==1}}">置顶</text>
 									{{item.article_header}}
 								</view>
-								<!-- <view wx:if="{{item.excerpt}}" class="jiangqie-news-describe">{{item.excerpt}}</view> -->
+								<view wx:if="{{item.article_abstract}}" class="jiangqie-news-describe">{{item.article_abstract}}</view>
 								
 							</view>
+							
 							<!-- <image wx:if="{{item.stick==1}}" src="../../images/set_top.png" mode="aspectFill" class="jiangqie-news-stick-image"></image> -->
 						</view>
 					</block>
@@ -153,39 +139,33 @@
 
 				<view class="jiangqie-news-view">
 					<block wx:for="{{other_articles}}" wx:key="article_id">
-						<view wx:if="{{(listMode==1 && false) || (listMode==2) || (listMode==3 && index%5==4)}}" class="jiangqie-news-block image-wide" data-id="{{item.article_id}}" catchtap="handlerArticleClick">
-							<!-- <image src="{{item.thumbnail}}" mode="aspectFill" class="jiangqie-news-image"></image> -->
-							<view class="jiangqie-news-text">
-								<view class="jiangqie-news-title {{item.excerpt?'':'jiangqie-news-no-excerpt'}}">{{item.article_header}}</view>
-								<!-- <view wx:if="{{item.excerpt}}" class="jiangqie-news-describe">{{item.excerpt}}</view> -->
-								<view class="jiangqie-news-info">
-									<view class="jiangqie-news-cmt">
-										<image src="../../images/ctm2.png" mode="aspectFill" class=""></image>{{item.article_view}}
-									</view>
-									<!-- <text wx:for="{{item.tags}}" wx:key="id" class="jiangqie-news-tag">{{item.name}}</text> -->
-									<text class="jiangqie-news-time">{{item.article_post_time}}</text>
-								</view>
-							</view>
-						</view>
-						<view wx:else class="jiangqie-news-block" data-id="{{item.article_id}}" catchtap="handlerArticleClick">
+
+						<view class="jiangqie-news-block" data-id="{{item.article_id}}">
+							<view data-id="{{item.article_id}}" catchtap="handlerArticleClick">
 							<view class="jiangqie-news-info">
 									<view class="jiangqie-news-cmt">
+										<text wx:if="{{item.article_type}}" class="jiangqie-news-tag">{{topNav[item.article_type].name}}</text>
 										<image src="../../images/ctm2.png" mode="aspectFill" class=""></image>{{item.article_view}}
 									</view>
 									<image wx:if="{{!userInfo.avatarUrl}}" class="avatar" src="{{item.head_img}}"></image>
 									<view class="headimg_userinfo">
 										<text class="jiangqie-news-name">{{item.username}}</text>
 										<text>\n</text>
-										<text class="jiangqie-news-time">{{item.article_post_time}}</text>
+										<text class="jiangqie-news-time">{{item.string_date}}</text>
 									</view>
-									<!-- <text wx:for="{{item.tags}}" wx:key="id" class="jiangqie-news-tag">{{item.name}}</text> -->
+									
 								</view>
 							<!-- <image src="{{item.thumbnail}}" mode="aspectFill" class="jiangqie-news-image"></image> -->
 							<view class="jiangqie-news-text">
-								<view class="jiangqie-news-title {{item.excerpt?'':'jiangqie-news-no-excerpt'}}">{{item.article_header}}</view>
-								<!-- <view wx:if="{{item.excerpt}}" class="jiangqie-news-describe">{{item.excerpt}}</view> -->
+								<image wx:if="{{item.thumbnail}}" src="{{item.thumbnail}}" mode="aspectFill" class="jiangqie-news-image"></image>
+								<view class="jiangqie-news-title {{item.excerpt?'':'jiangqie-news-no-excerpt'}}">
+									<text wx:if="{{item.on_top==1}}">置顶</text>
+									{{item.article_header}}</view>
+								<view wx:if="{{item.article_abstract}}" class="jiangqie-news-describe">{{item.article_abstract}}</view>
 								
 							</view>
+						</view>
+							<button wx:if="{{currentTab==5}}" class="jiangqie-news-delete" data-article_id='{{item.article_id}}' bindtap="handlerDeleteArticle">删除此贴</button>
 						</view>
 					</block>
 				</view>

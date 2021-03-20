@@ -1,0 +1,31 @@
+<view class="container">
+  <view bindtap="createPost">
+					<image class="createPost" src="../../../images/add.png"></image>
+	</view>
+    <view class="orders">
+        <navigator url="../resaleDetail/resaleDetail?id={{item.id}}" class="order" wx:for="{{goodList}}" wx:key="{{item.id}}">
+            <view class="h">
+                <view class="l">商品编号：{{item.goods_id}}</view>
+                <view class="r">{{item.goods_brief}}</view>
+            </view>
+            <view class="goods">
+                <view class="img">
+                    <image src="{{item.gooddetail.list_pic_url}}"></image>
+                </view>
+                <view class="info">
+                    <text class="name">{{item.gooddetail.name}}</text>
+                    <text class="number">共{{item.gooddetail.goods_number}}件库存</text>
+                </view>
+                <view class="status"></view>
+            </view>
+            <view class="b">
+                <view class="l">目标价格：￥{{item.gooddetail.retail_price}}</view>
+                <view class="r">
+                    <button class="btn_del" data-order-index="{{item.goods_id}}" catchtap="del_mygood">删除商品</button>
+                    <button class="btn" data-order-index="{{index}}" wx:if="{{!item.good_status}}" catchtap="">正在审核...</button>
+                    <button class="btn" data-order-index="{{index}}" wx:if="{{item.good_status}}" catchtap="">已经上架...</button>
+                </view>
+            </view>
+        </navigator>
+    </view>
+</view>

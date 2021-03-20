@@ -19,7 +19,7 @@ Component({
         },
         color: {
             type: String,
-            value: 'rgba(255, 255, 255, 1)'
+            value: 'rgba(255, 255, 255, 1)'//透明
         },
         title: {
             type: String,

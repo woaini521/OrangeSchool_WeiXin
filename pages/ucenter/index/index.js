@@ -18,78 +18,72 @@ Page({
     wx.getSetting({
       success(res) {
         if (res.authSetting['scope.userInfo']) {
-          // wx.authorize({
-          //   scope: 'scope.userInfo',
-          //   success () {
-          //     // 用户已经同意小程序使用权限，后续调用接口不会弹窗询问
-          //   }
-          // })
           that.setData({
             ifScope_Userinfo:"hidden",
           });
-          that.setData({
-            userInfo:app.globalData.userInfo,
+          if(app.globalData.user_id>0){
+            console.log("已经登陆");
+            that.setData({
+              userInfo:app.globalData.userInfo,
+            });
+          }else{
+            wx.login({
+              success: function(rees){ 
+                  if(rees.code) {
+                      wx.getUserInfo({
+                          success: function (res) {
+                            console.log(res.userInfo);     
+                              app.globalData.userInfo = res.userInfo;
+                              that.setData({
+                                userInfo:app.globalData.userInfo,
+                              });
+                              // console.log(res.userInfo);
+                              // wx.setStorageSync('userInfo', app.globalData.userInfo);//存储userInfo
+                              // var d=app.globalData;//这里存储了appid、secret、token串
+                              util.request(api.AuthLoginByWeixin, {//登录nideshop
+                                code: rees.code,
+                                userInfo: app.globalData.userInfo,
+                              }, 'POST').then((res) => {
+                              console.log(res)
+                              if (res.errno !== 0) {
+                                wx.showToast({
+                                  title: '微信登录失败',
+                                })
+                                return false;
+                              }
+                              getApp().globalData.user_id = res.data.userInfo.id;
+                              wx.setStorageSync('token', res.data.token);
+                            }).catch((err) => {
+                              console.log(err)
+                            })
+                          }
+                      });
+                      
+                  }
+                  else {
+                      console.log('获取用户登录态失败！' + res.errMsg)
+                      
+                  }          
+              }  
           });
-          var temp_userinfo = app.globalData.userInfo;
-          temp_userinfo.openId = app.globalData.user.openid;
-          console.log(temp_userinfo);
-          util.request(api.AuthLoginByWeixin, {
-              code: res,
-              userInfo: temp_userinfo,
-            }, 'POST').then((res) => {
-            console.log(res)
-            if (res.errno !== 0) {
-              wx.showToast({
-                title: '微信登录失败',
-              })
-              return false;
-            }
-            // 设置用户信息
-            // this.setData({
-            //   userInfo: res.data.userInfo,
-            //   showLoginDialog: false
-            // });
-            // app.globalData.userInfo = res.data.userInfo;
-            // app.globalData.token = res.data.token;
-            // wx.setStorageSync('userInfo', JSON.stringify(res.data.userInfo));
-            wx.setStorageSync('token', res.data.token);
-          }).catch((err) => {
-            console.log(err)
-          })
+          }
+          
         }else{
           that.setData({
             ifScope_Userinfo:"visible",
           });
-          that.setData({
-            userInfo:app.globalData.userInfo,
-          });
-          var temp_userinfo = app.globalData.userInfo;
-          temp_userinfo.openId = app.globalData.user.openid;
-          console.log(temp_userinfo);
-          util.request(api.AuthLoginByWeixin, {
-              code: res,
-              userInfo: temp_userinfo,
-            }, 'POST').then((res) => {
-            console.log(res)
-            if (res.errno !== 0) {
-              wx.showToast({
-                title: '微信登录失败',
-              })
-              return false;
+          wx.showModal({
+            title: '使用提示',
+            content: '请按下按钮同意授权请求',
+            success(res) {
+                if (res.confirm) {
+                  
+              }else{
+
+              }
             }
-            // 设置用户信息
-            // that.setData({
-            //   userInfo: res.data.userInfo,
-            //   showLoginDialog: false
-            // });
-            // app.globalData.userInfo = res.data.userInfo;
-            // app.globalData.token = res.data.token;
-            // wx.setStorageSync('userInfo', JSON.stringify(res.data.userInfo));
-            wx.setStorageSync('token', res.data.token);
-          }).catch((err) => {
-            console.log(err)
-          })
-          // console.log(that.data.userInfo);
+          });
+          
         }
       }
     })
@@ -102,6 +96,90 @@ Page({
     // }
     
   },
+  onPullDownRefresh:function(){
+    wx.showNavigationBarLoading() //在标题栏中显示加载
+    //模拟加载
+    setTimeout(function()
+    {
+      // complete
+      wx.hideNavigationBarLoading() //完成停止加载
+      wx.stopPullDownRefresh() //停止下拉刷新
+    },2000);
+    var that = this;
+    wx.getSetting({
+      success(res) {
+        if (res.authSetting['scope.userInfo']) {
+          that.setData({
+            ifScope_Userinfo:"hidden",
+          });
+          if(app.globalData.user_id>0){
+            console.log("已经登陆");
+            that.setData({
+              userInfo:app.globalData.userInfo,
+            });
+          }else{
+            wx.login({
+              success: function(rees){ 
+                  if(rees.code) {
+                      wx.getUserInfo({
+                          success: function (res) {
+                            console.log(res.userInfo);     
+                              app.globalData.userInfo = res.userInfo;
+                              that.setData({
+                                userInfo:app.globalData.userInfo,
+                              });
+                              // console.log(res.userInfo);
+                              // wx.setStorageSync('userInfo', app.globalData.userInfo);//存储userInfo
+                              // var d=app.globalData;//这里存储了appid、secret、token串
+                              util.request(api.AuthLoginByWeixin, {//登录nideshop
+                                code: rees.code,
+                                userInfo: app.globalData.userInfo,
+                              }, 'POST').then((res) => {
+                              console.log(res)
+                              if (res.errno !== 0) {
+                                wx.showToast({
+                                  title: '微信登录失败',
+                                })
+                                return false;
+                              }
+                              getApp().globalData.user_id = res.data.userInfo.id;
+                              wx.setStorageSync('token', res.data.token);
+                            }).catch((err) => {
+                              console.log(err)
+                            })
+                          }
+                      });
+                      
+                  }
+                  else {
+                      console.log('获取用户登录态失败！' + res.errMsg)
+                      
+                  }          
+              }  
+          });
+          }
+          
+        }else{
+          that.setData({
+            ifScope_Userinfo:"visible",
+          });
+          wx.showModal({
+            title: '使用提示',
+            content: '请按下按钮同意授权请求',
+            success(res) {
+                if (res.confirm) {
+                  
+              }else{
+
+              }
+            }
+          });
+          
+        }
+      }
+    })
+  }
+  ,
   onReady: function() {
 
   },
@@ -142,6 +220,7 @@ Page({
   // },
 
   onWechatLogin(e) {
+    let that = this;
     this.setData({
       ifScope_Userinfo:"hidden",
     });
@@ -168,32 +247,72 @@ Page({
       });
       wx.setStorageSync('userInfo', JSON.stringify(e.detail.userInfo));
       console.log(this.data.userInfo);
+      wx.login({
+        success: function(rees){ 
+            if(rees.code) {
+                wx.getUserInfo({
+                    success: function (res) {
+                      console.log(res.userInfo);
+                        // var objz={};
+                        // objz.avatarUrl=res.userInfo.avatarUrl;
+                        // objz.nickName=res.userInfo.nickName;          
+                        app.globalData.userInfo = res.userInfo;
+                        // console.log(res.userInfo);
+                        wx.setStorageSync('userInfo', app.globalData.userInfo);//存储userInfo
+                        var d=app.globalData;//这里存储了appid、secret、token串
+                        util.request(api.AuthLoginByWeixin, {//登录nideshop
+                          code: rees.code,
+                          userInfo: app.globalData.userInfo,
+                        }, 'POST').then((res) => {
+                        console.log(res)
+                        if (res.errno !== 0) {
+                          wx.showToast({
+                            title: '微信登录失败',
+                          })
+                          return false;
+                        }
+                        getApp().globalData.user_id = res.data.userInfo.id;
+                        wx.setStorageSync('token', res.data.token);
+                      }).catch((err) => {
+                        console.log(err)
+                      })
+                    }
+                });
+                
+            }
+            else {
+                console.log('获取用户登录态失败！' + res.errMsg)
+                
+            }          
+        }  
+    }); 
     }
-    util.login().then((res) => {
-      return util.request(api.AuthLoginByWeixin, {
-        code: res,
-        userInfo: e.detail
-      }, 'POST');
-    }).then((res) => {
-      console.log(res)
-      if (res.errno !== 0) {
-        wx.showToast({
-          title: '微信登录失败',
-        })
-        return false;
-      }
-      // 设置用户信息
-      this.setData({
-        userInfo: res.data.userInfo,
-        showLoginDialog: false
-      });
-      app.globalData.userInfo = res.data.userInfo;
-      app.globalData.token = res.data.token;
-      wx.setStorageSync('userInfo', JSON.stringify(res.data.userInfo));
-      wx.setStorageSync('token', res.data.token);
-    }).catch((err) => {
-      console.log(err)
-    })
+    // util.login().then((res) => {
+    //   return util.request(api.AuthLoginByWeixin, {
+    //     code: res,
+    //     userInfo: e.detail
+    //   }, 'POST');
+    // }).then((res) => {
+    //   console.log(res)
+    //   if (res.errno !== 0) {
+    //     wx.showToast({
+    //       title: '微信登录失败',
+    //     })
+    //     return false;
+    //   }
+    //   // 设置用户信息
+    //   this.setData({
+    //     userInfo: res.data.userInfo,
+    //     showLoginDialog: false
+    //   });
+    //   app.globalData.userInfo = res.data.userInfo;
+    //   app.globalData.token = res.data.token;
+    //   wx.setStorageSync('userInfo', JSON.stringify(res.data.userInfo));
+    //   wx.setStorageSync('token', res.data.token);
+    // }).catch((err) => {
+    //   console.log(err)
+    // })
+    
   },
 
   onOrderInfoClick: function(event) {

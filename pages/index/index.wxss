@@ -24,7 +24,13 @@
   width: 28rpx;
   height: 28rpx;
 }
-
+.kind-icon{
+  background-size: 100%;
+  width: 56rpx;
+  height: 56rpx;
+  /* right: 5rpx; */
+  padding-left: 5rpx;
+}
 .search .txt {
   height: 42rpx;
   line-height: 42rpx;

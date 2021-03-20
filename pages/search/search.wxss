@@ -43,10 +43,10 @@ page{
 
 .search-header .del{
     position: absolute;
-    top: 3rpx;
+    margin-top: 13rpx;
     right: 10rpx;
-    width: 53rpx;
-    height: 53rpx;
+    width: 35rpx;
+    height: 35rpx;
     z-index: 10;
 }
 
