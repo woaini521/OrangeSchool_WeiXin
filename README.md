@@ -1,4 +1,6 @@
-### NideShop商城（服务端）
+### OrangeSchool
+
+##### 基于Node.js+MySQL开发的开源微信小程序商城nideshop二次开发（微信小程序）
 
 ### 后端API开发环境配置
 + 创建数据库nideshop并导入项目根目录下的nideshop.sql
