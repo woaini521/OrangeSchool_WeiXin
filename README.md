@@ -65,7 +65,7 @@ npm start
 + ....
 
 ### 项目截图
-
+<img src="https://github.com/Sovea/OrangeSchool_WeiXin/blob/master/screenshots/orange_school_1.png" width="50%">
 ![截图](https://github.com/Sovea/OrangeSchool_WeiXin/blob/master/screenshots/orange_school_1.png)
 ![截图](https://github.com/Sovea/OrangeSchool_WeiXin/blob/master/screenshots/orange_school_2.png)
 ![截图](https://github.com/Sovea/OrangeSchool_WeiXin/blob/master/screenshots/orange_school_3.png)
