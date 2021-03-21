@@ -69,6 +69,8 @@ npm start
 <img src="https://github.com/Sovea/OrangeSchool_WeiXin/blob/master/screenshots/orange_school_2.png" width="35%">
 <img src="https://github.com/Sovea/OrangeSchool_WeiXin/blob/master/screenshots/orange_school_3.png" width="35%">
 <img src="https://github.com/Sovea/OrangeSchool_WeiXin/blob/master/screenshots/orange_school_4.png" width="35%">
+
+
 ### 项目结构
 ```
 ├─config                
